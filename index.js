@@ -16,13 +16,12 @@ const job = schedule.scheduleJob('*/10 * * * * *', async () => {
     const response = await shell.exec(`systemctl is-active nginx`)
     const status = response.stdout.trim();
     if(status !== 'active') { 
-        await shell.exec(`echo ${password} | sudo -S systemctl reboot`, {silent: true})
         
         const dateTime = moment().format('l')
 
         const message = {
             channel: '#server-alerts',
-            text: `<${serverUrl}|${serverName} is restarted> at ${dateTime}`,
+            text: `<${serverUrl}|${serverName} is stopped> at ${dateTime}`,
             username: environment,
             icon_emoji: ':makeitrain:',
             unfurl_links: true,
@@ -35,5 +34,7 @@ const job = schedule.scheduleJob('*/10 * * * * *', async () => {
         } catch (err) {
             console.log(err)
         }
+        
+        await shell.exec(`echo ${password} | sudo -S systemctl reboot`, {silent: true})
     }
 });

@@ -14,11 +14,8 @@ const webhookClient = new IncomingWebhook(webHookUrl);
 const job = schedule.scheduleJob('*/5 * * * * *', async () => {
     const response = await shell.exec(`systemctl is-active nginx`)
     const status = response.stdout.trim();
-    if(status !== 'active') {
-        const startCommand = `echo sudo -S systemctl start nginx` 
-        await shell.exec(startCommand)
-        await shell.echo(password)
-        await shell.echo('\n')
+    if(status !== 'active') { 
+        await shell.exec(`echo ${password} | sudo -S systemctl start nginx`, {silent: true})
         
         const message = {
             channel: '#server-alerts',

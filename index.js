@@ -12,10 +12,12 @@ const password = process.env.PASSWORD ?? ""
 const webhookClient = new IncomingWebhook(webHookUrl);
 
 const job = schedule.scheduleJob('*/5 * * * * *', async () => {
-    const response = await shell.exec(`echo -e "${password}"  | sudo -S systemctl is-active nginx`)
+    const response = await shell.exec(`echo -e "${password}" | sudo -S systemctl is-active nginx`)
     const status = response.stdout.trim();
     if(status !== 'active') {
-        await shell.exec(`echo -e "${password}"  | sudo -S systemctl start nginx`)
+        const startCommand = `echo -e "${password}" | sudo -S systemctl start nginx`
+        console.log(startCommand)
+        await shell.exec(startCommand)
         
         const message = {
             channel: '#server-alerts',

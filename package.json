@@ -1,0 +1,19 @@
+{
+  "name": "monitor",
+  "version": "1.0.0",
+  "description": "Server monitor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coxpert/monitor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coxpert/monitor/issues"
+  },
+  "homepage": "https://github.com/coxpert/monitor#readme"
+}

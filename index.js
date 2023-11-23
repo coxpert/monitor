@@ -15,7 +15,7 @@ const job = schedule.scheduleJob('*/5 * * * * *', async () => {
     const response = await shell.exec(`systemctl is-active nginx`)
     const status = response.stdout.trim();
     if(status !== 'active') {
-        const startCommand = `sudo ystemctl start nginx` 
+        const startCommand = `sudo -S systemctl start nginx` 
         await shell.exec(startCommand)
         await shell.echo(password)
         

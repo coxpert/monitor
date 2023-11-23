@@ -4,6 +4,7 @@
   "description": "Server monitor",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/coxpert/monitor/issues"
   },
-  "homepage": "https://github.com/coxpert/monitor#readme"
+  "homepage": "https://github.com/coxpert/monitor#readme",
+  "dependencies": {
+    "node": "^21.1.0",
+    "node-schedule": "^2.1.1"
+  }
 }

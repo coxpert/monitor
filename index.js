@@ -3,7 +3,7 @@ const schedule = require('node-schedule');
 const shell = require('shelljs');
 const { IncomingWebhook } = require('@slack/webhook')
 
-const webHookUrl = process.env.SLACK_WEBHOOK ?? 'https://hooks.slack.com/services/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'
+const webHookUrl = process.env.SLACK_WEBHOOK ?? 'https://hooks.slack.com/services/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'
 const environment = process.env.APP_ENV ?? 'development'
 const serverUrl = process.env.APP_SERVER ?? 'https://forge.laravel.com/servers/719367'
 

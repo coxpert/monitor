@@ -15,10 +15,10 @@ const job = schedule.scheduleJob('*/5 * * * * *', async () => {
     const response = await shell.exec(`systemctl is-active nginx`)
     const status = response.stdout.trim();
     if(status !== 'active') {
-        const startCommand = `sudo -S systemctl start nginx` 
+        const startCommand = `echo sudo -S systemctl start nginx` 
         await shell.exec(startCommand)
         await shell.echo(password)
-        await shell.echo('-ne "\n"')
+        await shell.echo('\n')
         
         const message = {
             channel: '#server-alerts',

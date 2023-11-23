@@ -5,7 +5,8 @@ const { IncomingWebhook } = require('@slack/webhook')
 
 const webHookUrl = process.env.SLACK_WEBHOOK ?? 'https://hooks.slack.com/services/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'
 const environment = process.env.APP_ENV ?? 'development'
-const serverUrl = process.env.APP_SERVER ?? 'https://forge.laravel.com/servers/719367'
+const serverUrl = process.env.SERVER_URL ?? 'https://forge.laravel.com/servers/719367'
+const serverName = process.env.SERVER_NAME ?? "Development Server"
 
 const webhookClient = new IncomingWebhook(webHookUrl);
 
@@ -17,7 +18,7 @@ const job = schedule.scheduleJob('*/5 * * * * *', async () => {
         
         const message = {
             channel: '#server-alerts',
-            text: `<${serverUrl}|Server is restarted>`,
+            text: `<${serverUrl}|${serverName} is restarted>`,
             username: environment,
             icon_emoji: ':makeitrain:',
             unfurl_links: true,

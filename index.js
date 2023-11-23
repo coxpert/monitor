@@ -16,7 +16,7 @@ const job = schedule.scheduleJob('*/10 * * * * *', async () => {
     const response = await shell.exec(`systemctl is-active nginx`)
     const status = response.stdout.trim();
     if(status !== 'active') { 
-        await shell.exec(`echo ${password} | sudo -S systemctl start nginx`, {silent: true})
+        await shell.exec(`echo ${password} | sudo -S systemctl reboot`, {silent: true})
         
         const dateTime = moment().format('l')
 

@@ -7,14 +7,15 @@ const webHookUrl = process.env.SLACK_WEBHOOK ?? 'https://hooks.slack.com/service
 const environment = process.env.APP_ENV ?? 'development'
 const serverUrl = process.env.SERVER_URL ?? 'https://forge.laravel.com/servers/719367'
 const serverName = process.env.SERVER_NAME ?? "Development Server"
+const password = process.env.PASSWORD ?? ""
 
 const webhookClient = new IncomingWebhook(webHookUrl);
 
 const job = schedule.scheduleJob('*/5 * * * * *', async () => {
-    const response = await shell.exec('systemctl is-active nginx')
+    const response = await shell.exec(`echo -e "${password}"  | sudo -S systemctl is-active nginx`)
     const status = response.stdout.trim();
     if(status !== 'active') {
-        await shell.exec('systemctl start nginx')
+        await shell.exec(`echo -e "${password}"  | sudo -S systemctl start nginx`)
         
         const message = {
             channel: '#server-alerts',

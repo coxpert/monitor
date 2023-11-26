@@ -14,7 +14,7 @@ const webhookClient = new IncomingWebhook(webHookUrl);
 
 const job = schedule.scheduleJob('*/10 * * * * *', async () => {
     await fetch('https://dev.dripappsserver.com').then(res => {
-        console.log(res)
+        console.log(res.status)
     }).catch(error => {
         console.log(error)
     })

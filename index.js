@@ -13,28 +13,28 @@ const password = process.env.PASSWORD ?? ""
 const webhookClient = new IncomingWebhook(webHookUrl);
 
 const job = schedule.scheduleJob('*/10 * * * * *', async () => {
-    const response = await shell.exec(`systemctl is-active nginx`)
-    const status = response.stdout.trim();
-    if(status !== 'active') { 
+    const response = await fetch('http://localhost:80');
+    console.log(response.status)
+    // if(status !== 'active') { 
         
-        const dateTime = moment().format('l')
+    //     const dateTime = moment().format('l')
 
-        const message = {
-            channel: '#server-alerts',
-            text: `<${serverUrl}|${serverName} is stopped> at ${dateTime}`,
-            username: environment,
-            icon_emoji: ':makeitrain:',
-            unfurl_links: true,
-            unfurl_media: false,
-            link_names: true,
-        };
+    //     const message = {
+    //         channel: '#server-alerts',
+    //         text: `<${serverUrl}|${serverName} is stopped> at ${dateTime}`,
+    //         username: environment,
+    //         icon_emoji: ':makeitrain:',
+    //         unfurl_links: true,
+    //         unfurl_media: false,
+    //         link_names: true,
+    //     };
 
-        try {
-            await webhookClient.send(message);
-        } catch (err) {
-            console.log(err)
-        }
+    //     try {
+    //         await webhookClient.send(message);
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
         
-        await shell.exec(`echo ${password} | sudo -S systemctl reboot`, {silent: true})
-    }
+    //     await shell.exec(`echo ${password} | sudo -S systemctl reboot`, {silent: true})
+    // }
 });

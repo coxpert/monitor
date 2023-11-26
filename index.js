@@ -9,11 +9,12 @@ const environment = process.env.APP_ENV ?? 'development'
 const serverUrl = process.env.SERVER_URL ?? 'https://forge.laravel.com/servers/719367'
 const serverName = process.env.SERVER_NAME ?? "Development Server"
 const password = process.env.PASSWORD ?? ""
+const webUrl = process.env.WEB_URL ?? "https://dev.dripappsserver.com"
 
 const webhookClient = new IncomingWebhook(webHookUrl);
 
 const job = schedule.scheduleJob("*/10 * * * * *", async () => {
-  await fetch("https://dev.dripappsserver.com")
+  await fetch(webUrl)
     .then(async (res) => {
       if (res.status === 502) {
         const dateTime = moment().format("MMMM Do YYYY, h:mm:ss a");

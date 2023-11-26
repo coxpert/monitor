@@ -13,8 +13,11 @@ const password = process.env.PASSWORD ?? ""
 const webhookClient = new IncomingWebhook(webHookUrl);
 
 const job = schedule.scheduleJob('*/10 * * * * *', async () => {
-    const response = await fetch('http://137.184.72.210:80');
-    console.log(response.status)
+    await fetch('https://dev.dripappsserver.com').then(res => {
+        console.log(res)
+    }).catch(error => {
+        console.log(error)
+    })
     // if(status !== 'active') { 
         
     //     const dateTime = moment().format('l')

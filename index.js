@@ -13,7 +13,7 @@ const password = process.env.PASSWORD ?? ""
 const webhookClient = new IncomingWebhook(webHookUrl);
 
 const job = schedule.scheduleJob('*/10 * * * * *', async () => {
-    const response = await fetch('http://localhost:80');
+    const response = await fetch('http://137.184.72.210:80');
     console.log(response.status)
     // if(status !== 'active') { 
         

@@ -12,32 +12,34 @@ const password = process.env.PASSWORD ?? ""
 
 const webhookClient = new IncomingWebhook(webHookUrl);
 
-const job = schedule.scheduleJob('*/10 * * * * *', async () => {
-    await fetch('https://dev.dripappsserver.com').then(res => {
-        console.log(res.status)
-    }).catch(error => {
-        console.log(error)
+const job = schedule.scheduleJob("*/10 * * * * *", async () => {
+  await fetch("https://dev.dripappsserver.com")
+    .then(async (res) => {
+      if (res.status === 502) {
+        const dateTime = moment().format("l");
+
+        const message = {
+          channel: "#server-alerts",
+          text: `<${serverUrl}|${serverName} is stopped> at ${dateTime}`,
+          username: environment,
+          icon_emoji: ":makeitrain:",
+          unfurl_links: true,
+          unfurl_media: false,
+          link_names: true,
+        };
+
+        try {
+          await webhookClient.send(message);
+        } catch (err) {
+          console.log(err);
+        }
+
+        await shell.exec(`echo ${password} | sudo -S systemctl reboot`, {
+          silent: true,
+        });
+      }
     })
-    // if(status !== 'active') { 
-        
-    //     const dateTime = moment().format('l')
-
-    //     const message = {
-    //         channel: '#server-alerts',
-    //         text: `<${serverUrl}|${serverName} is stopped> at ${dateTime}`,
-    //         username: environment,
-    //         icon_emoji: ':makeitrain:',
-    //         unfurl_links: true,
-    //         unfurl_media: false,
-    //         link_names: true,
-    //     };
-
-    //     try {
-    //         await webhookClient.send(message);
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-        
-    //     await shell.exec(`echo ${password} | sudo -S systemctl reboot`, {silent: true})
-    // }
+    .catch((error) => {
+      console.log(error);
+    });
 });

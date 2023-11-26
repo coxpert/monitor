@@ -16,7 +16,7 @@ const job = schedule.scheduleJob("*/10 * * * * *", async () => {
   await fetch("https://dev.dripappsserver.com")
     .then(async (res) => {
       if (res.status === 502) {
-        const dateTime = moment().format("l");
+        const dateTime = moment().format("MMMM Do YYYY, h:mm:ss a");
 
         const message = {
           channel: "#server-alerts",
